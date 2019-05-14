@@ -13,7 +13,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 + HTML
 + CSS
 + JavaScript
-+ Bootstrap
++ Font Awesome 4.6.1
+
+## Credits
++ [Background image](https://www.toptal.com/designers/subtlepatterns/geometry-2/)
 
 ## Contributors
 [Michael Josh A. Dangcil](https://github.com/MichaelJoshDangcil)
