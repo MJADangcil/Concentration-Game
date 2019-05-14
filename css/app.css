@@ -2,14 +2,11 @@ html {
   box-sizing: border-box;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: inherit;
 }
 
-html,
-body {
+html, body {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -36,7 +33,6 @@ h1 {
 /*
  * Styles for the deck of cards
  */
-
 .deck {
   width: 660px;
   min-height: 680px;
@@ -84,7 +80,6 @@ h1 {
 /*
  * Styles for the Score Panel
  */
-
 .score-panel {
   text-align: left;
   width: 345px;
@@ -106,4 +101,37 @@ h1 {
 .score-panel .restart {
   float: right;
   cursor: pointer;
+}
+
+/*
+ * Styles for the win screen
+ */
+.win-screen {
+  display: none;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+}
+
+.win-screen .checkmark {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #33af90;
+  stroke-miterlimit: 10;
+  stroke-dashoffset: 0;
+  margin: 10% auto;
+}
+
+.win-screen button {
+  border-radius: 8px;
+  background-color: #33af90;
+  font-size: 18px;
+  color: #ffffff;
+  width: 150px;
+  height: 40px;
 }
