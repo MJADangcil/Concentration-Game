@@ -17,6 +17,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 ## Credits
 + [Background image](https://www.toptal.com/designers/subtlepatterns/geometry-2/)
++ [Shuffle algorithm/Fisher-Yates (aka Knuth) Shuffle](http://stackoverflow.com/a/2450976)
 
 ## Contributors
 [Michael Josh A. Dangcil](https://github.com/MichaelJoshDangcil)
