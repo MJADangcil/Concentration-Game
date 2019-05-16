@@ -1,24 +1,13 @@
-var cards = [
-  'fa-diamond', 'fa-diamond',
-  'fa-paper-plane-o', 'fa-paper-plane-o',
-  'fa-anchor', 'fa-anchor',
-  'fa-bolt', 'fa-bolt',
-  'fa-cube', 'fa-cube',
-  'fa-leaf', 'fa-leaf',
-  'fa-bicycle', 'fa-bicycle',
-  'fa-bomb', 'fa-bomb'
-];
+//List of icons and creation of cards array
+let icons = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
+let cards = icons.concat(icons);
 
-function generateCard(card) {
-  return `<li class='card' data-card='${card}'><i class='fa ${card}'></i></li>`
-}
-
-var moves = 0;
-var winCondition = (cards.length) / 2;
-var moveCounter = document.querySelector('.moves');
+let moves = 0;
+let winCondition = (cards.length) / 2;
+let moveCounter = document.querySelector('.moves');
 
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length, temporaryValue, randomIndex;
 
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
@@ -31,9 +20,13 @@ function shuffle(array) {
   return array;
 }
 
+function generateCard(card) {
+  return `<li class='card' data-card='${card}'><i class='fa ${card}'></i></li>`
+}
+
 function initGame() {
-  var deck = document.querySelector('.deck');
-  var cardHTML = shuffle(cards).map(function(card) {
+  let deck = document.querySelector('.deck');
+  let cardHTML = shuffle(cards).map(function(card) {
     return generateCard(card);
   });
 
@@ -42,12 +35,12 @@ function initGame() {
 
 initGame();
 
-var allCards = document.querySelectorAll('.card');
-var winScreen = document.querySelector('.win-screen');
-var winMessage = document.querySelector('.win-message');
-var game = document.querySelector('.container');
-var reset = document.querySelector('.restart');
-var openCards = [];
+let allCards = document.querySelectorAll('.card');
+let winScreen = document.querySelector('.win-screen');
+let winMessage = document.querySelector('.win-message');
+let game = document.querySelector('.container');
+let reset = document.querySelector('.restart');
+let openCards = [];
 
 allCards.forEach(function(card) {
   card.addEventListener('click', function(e) {
@@ -99,7 +92,7 @@ function winGame() {
     game.style.display = 'none';
     winScreen.style.display = 'block';
     
-    var movesToWin = document.createElement('span');
+    let movesToWin = document.createElement('span');
     movesToWin.innerHTML = `<span>You had ${moves} moves and 1 Star! Woooooo!</span>`
 
     winMessage.appendChild(movesToWin);
