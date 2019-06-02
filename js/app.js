@@ -7,7 +7,7 @@ let winCondition = (cards.length) / 2;
 /**
  * @description Shuffles an array using Fisher-Yates (aka Knuth) Shuffle.
  * @param {string} array 
- * @return {string} 
+ * @returns {string} 
  */
 function shuffle(array) {
   let currentIndex = array.length, temporaryValue, randomIndex;
@@ -26,13 +26,13 @@ function shuffle(array) {
 /**
  * @description Receives card info and builds an HTML string for ease of DOM manipulation.
  * @param {string} card
- * @return {string} 
+ * @returns {string} 
  */
 function generateCard(card) {
   return `<li class='card' data-card='${card}'><i class='fa ${card}'></i></li>`
 }
 
-//Initialize the game board.
+/** @description Initializes the game board and populates with shuffled cards. */
 function initGame() {
   let deck = document.querySelector('.deck');
   let cardHTML = shuffle(cards).map(function(card) {
@@ -61,84 +61,7 @@ startTimer();
 
 allCards.forEach(function(card) {
   card.addEventListener('click', function(e) {
-    if (!card.classList.contains('open')  && !card.classList.contains('show') && !card.classList.contains('match')) {
-      openCards.push(card);
-      card.classList.add('open', 'show');
-
-      if (openCards.length == 2) {
-        allCards.forEach(function(card) {
-          if (!openCards.includes(card) && !card.classList.contains('match')) {
-            card.classList.add('no-click');
-          }
-        });
-
-        // If cards match -> add match class
-        if (openCards[0].dataset.card == openCards[1].dataset.card) {
-          openCards[0].classList.add('match');
-          openCards[1].classList.add('match');
-          winCondition--;
-
-          if (winCondition == 0) {
-            winGame();
-          }
-
-          setTimeout(function() {
-            allCards.forEach(function(card) {
-              card.classList.remove('no-click');
-            });
-
-            openCards = [];
-          }, 1000);
-        } else {
-          // If card don't match -> hide
-          setTimeout(function() {
-            openCards.forEach(function(card) {
-              card.classList.remove('open', 'show');
-            });
-
-            allCards.forEach(function(card) {
-              card.classList.remove('no-click');
-            });
-
-            openCards = [];
-          }, 1000);
-        }
-
-        moves++;
-        if (moves == 1) {
-          moveCounter.innerHTML = `<span>${moves} Move</span>`;
-        } else {
-          moveCounter.innerHTML = `<span>${moves} Moves</span>`;
-        }
-
-        if (moves <= 10) {
-          stars.innerHTML = 
-            `
-            <li><i class='fa fa-star'></i></li>
-            <li><i class='fa fa-star'></i></li>
-            <li><i class='fa fa-star'></i></li>
-            `
-        } else if (moves <= 15) {
-          starRating = 2;
-          stars.innerHTML = 
-            `
-            <li><i class='fa fa-star'></i></li>
-            <li><i class='fa fa-star'></i></li>
-            <li><i class='fa fa-star-o'></i></li>
-            `
-          
-        } else {
-          starRating = 1;
-          stars.innerHTML = 
-            `
-            <li><i class='fa fa-star'></i></li>
-            <li><i class='fa fa-star-o'></i></li>
-            <li><i class='fa fa-star-o'></i></li>
-            `
-          
-        }
-      }
-    }
+    showCard(card);
   });
 });
 
@@ -146,11 +69,7 @@ reset.addEventListener('click', function(e) {
   window.location.reload();
 });
 
-/**
- * @description Starts timer of the game as soon as window loads.
- * @param {}
- * @return {}
- */
+/** @description Starts timer of the game as soon as window loads. */
 function startTimer() {
   let s = 0;
   let m = 0;
@@ -174,10 +93,105 @@ function startTimer() {
 }
 
 /**
- * @description Removes game board "off-screen" and renders win modal with the player's statistics.
- * @param {}
- * @return {} 
+ * @description Shows the card through adding open and show classes to card element.
+ * @param {Node} c
  */
+function showCard(c) {
+  if (!c.classList.contains('open')  && !c.classList.contains('show') && !c.classList.contains('match')) {
+    openCards.push(c);
+    c.classList.add('open', 'show');
+  }
+
+  if (openCards.length == 2) {
+    checkCards();
+    scoreCheck();
+  }
+}
+
+/** @description Checks the openCards array (always two cards) and renders all cards unclickable. */
+function checkCards() {
+  allCards.forEach(function(card) {
+    if (!openCards.includes(card)) {
+      card.classList.add('no-click');
+    }
+  });
+
+  if (openCards[0].dataset.card == openCards[1].dataset.card) {
+    matchCards();
+  } else {
+    mismatchCards();
+  }
+}
+
+/** @description Matches cards by adding match classes to card element and decrments the winCondition. */
+function matchCards() {
+  openCards.forEach(function(card) {
+    card.classList.add('match');
+  });
+
+  winCondition--;
+
+  if (winCondition == 0) {
+    winGame();
+  }
+
+  openCards = [];
+
+  allCards.forEach(function(card) {
+    card.classList.remove('no-click');
+  });
+}
+
+/** @description Mismatches cards and resets the choices. */
+function mismatchCards() {
+  openCards.forEach(function(card) {
+    card.classList.add('mismatch', 'no-click');
+  });
+
+  setTimeout(function() {
+    allCards.forEach(function (card) {
+      card.classList.remove('no-click', 'open', 'show', 'mismatch');
+    });
+
+    openCards = [];
+  }, 1000);
+}
+
+function scoreCheck() {
+  moves++;
+  if (moves == 1) {
+    moveCounter.innerHTML = `<span>${moves} Move</span>`;
+  } else {
+    moveCounter.innerHTML = `<span>${moves} Moves</span>`;
+  }
+
+  if (moves <= 10) {
+    stars.innerHTML = 
+      `
+      <li><i class='fa fa-star'></i></li>
+      <li><i class='fa fa-star'></i></li>
+      <li><i class='fa fa-star'></i></li>
+      `
+  } else if (moves <= 15) {
+    starRating = 2;
+    stars.innerHTML = 
+      `
+      <li><i class='fa fa-star'></i></li>
+      <li><i class='fa fa-star'></i></li>
+      <li><i class='fa fa-star-o'></i></li>
+      `
+  } else {
+    starRating = 1;
+    stars.innerHTML = 
+      `
+      <li><i class='fa fa-star'></i></li>
+      <li><i class='fa fa-star-o'></i></li>
+      <li><i class='fa fa-star-o'></i></li>
+      `
+  }
+}
+
+/** @description Removes game board "off-screen" and renders win modal with the player's statistics. */
 function winGame() {
   clearInterval(time);
   setTimeout(function() {
@@ -187,9 +201,9 @@ function winGame() {
     let score = document.createElement('span');
 
     if (starRating == 1) {
-      score.innerHTML = `<span>You had ${moves} moves and took ${timeCounter.textContent}! You had ${starRating} star!</span>`;
+      score.innerHTML = `<span>You had ${moves} moves and took ${timeCounter.textContent}!<br>You got ${starRating} star!</span>`;
     } else {
-      score.innerHTML = `<span>You had ${moves} moves and took ${timeCounter.textContent}! You had ${starRating} stars!</span>`;
+      score.innerHTML = `<span>You had ${moves} moves and took ${timeCounter.textContent}!<br>You got ${starRating} stars!</span>`;
     }
   
     winMessage.appendChild(score);
