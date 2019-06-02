@@ -59,6 +59,32 @@ h1 {
 /*
  * Styles for the deck of cards
  */
+
+@keyframes card-flip {
+  from {transform: rotateY(180deg);}
+  to {transform: rotateY(0deg);}
+}
+
+@keyframes card-match {
+  0%   {transform: scale(1, 1);}
+  16%  {transform: scale(1.3, 0.8);}
+  32%  {transform: scale(0.8, 1.3);}
+  48%  {transform: scale(1.15, 0.9);}
+  64%  {transform: scale(0.9, 1.15);}
+  85%  {transform: scale(1.075, 0.95);}
+  100% {transform: scale(1, 1);}
+}
+
+@keyframes card-mismatch {
+  0%     {transform: translateX(0px) rotateZ(0);}
+  12.5%  {transform: translateX(20px) rotateZ(8deg);}
+  25%    {transform: translateX(-10px) rotateZ(-4deg);}
+  37.5%  {transform: translateX(5px) rotateZ(2deg);}
+  50%    {transform: translateX(0px) rotateZ(0);}
+  75%    {transform: rotateY(0deg);}
+  100%   {transform: rotateY(180deg);}
+}
+
 .deck {
   width: 660px;
   min-height: 680px;
@@ -87,20 +113,35 @@ h1 {
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
-.deck .card.open {
-  transform: rotateY(0);
+.deck .card.open { 
   background: #02b3e4;
   cursor: default;
 }
 
 .deck .card.show {
   font-size: 33px;
+  animation-name: card-flip;
+  animation-duration: 0.5s;
 }
 
 .deck .card.match {
   cursor: default;
   background: #02ccba;
   font-size: 33px;
+  animation-name: card-match;
+  animation-duration: 1s;
+}
+
+.deck .card.mismatch {
+  background: #f75220;
+  color: #ffffff;
+  animation-name: card-mismatch;
+  animation-duration: 2s;
+}
+
+.deck .card.reject {
+  background: #02b3e4;
+  cursor: default;
 }
 
 .deck .no-click {
