@@ -1,5 +1,5 @@
 # Concentration Game
-This is a web-based [Concentration game](https://en.wikipedia.org/wiki/Concentration_(card_game)) that utilizes a grid of cards. The objective is simple.
+This is a web-based [Concentration](https://en.wikipedia.org/wiki/Concentration_(card_game)) game that utilizes a grid of cards. The objective is simple.
 
 Match the cards into pairs to win the game! Use the least amount of moves possible to obtain a higher star rating! Challenge yourself by completing the game as fast as possible!
 
