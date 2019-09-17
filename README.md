@@ -11,9 +11,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 ## Built With
 + HTML
-+ CSS
++ CSS/SASS
 + JavaScript
 + Font Awesome 4.6.1
++ Gulp.js
 
 ## Credits
 + [Background image](https://www.toptal.com/designers/subtlepatterns/geometry-2/)
